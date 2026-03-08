@@ -1,54 +1,28 @@
 BLOCK 3: NOTIFICATION SERVICE INTEGRATION PATTERN
-
 QUESTION:
-If we need a NotificationService in the future that should send an email when the 
-OnTaskCompleted event is triggered, which integration pattern (synchronous or asynchronous) 
-would you choose and why? Mention specific technologies.
+If we need a NotificationService in the future that should send an email when the OnTaskCompleted event is triggered, which integration pattern (synchronous or asynchronous) would you choose and why? Mention specific technologies.
 
 MY CHOICE:
-
-For integrating a NotificationService that sends emails when the OnTaskCompleted event 
-is triggered, I would choose an asynchronous event-driven architecture rather than a 
-synchronous HTTP/REST approach.
+For integrating a NotificationService that sends emails when the OnTaskCompleted event is triggered, I would choose an asynchronous event-driven architecture rather than a synchronous HTTP/REST approach.
 
 WHY ASYNCHRONOUS:
-
-1. Decoupling - I want the Task Service to be independent of the Notification Service 
-   so I can deploy and update each service separately without affecting the other.
-
-2. Performance - Task completion returns immediately to the user without waiting for the 
-   email to be sent, allowing the notification to be handled in the background. Email 
-   delivery failures do not cause task completion to fail.
-
-3. Scalability & Resilience - I need both services to scale independently. I can replicate 
-   the Notification service to handle multiple emails in parallel and buffer traffic spikes 
-   in the message queue. Failed notifications are automatically retried and persisted, 
-   so they won't be lost.
-
-4. Reliability - Messages are stored persistently, guaranteeing they won't be lost even 
-   if the system fails. Dead letter queues capture permanently failed messages.
+1. Decoupling - I want the Task Service to be independent of the Notification Service so I can deploy and update each service separately without affecting the other.
+2. Performance - Task completion returns immediately to the user without waiting for the email to be sent, allowing the notification to be handled in the background. Email delivery failures do not cause task completion to fail.
+3. Scalability & Resilience - I need both services to scale independently. I can replicate the Notification service to handle multiple emails in parallel and buffer traffic spikes in the message queue. Failed notifications are automatically retried and persisted,so they won't be lost.
+4. Reliability - Messages are stored persistently, guaranteeing they won't be lost even if the system fails. Dead letter queues capture permanently failed messages.
 
 SPECIFIC TECHNOLOGIES I WILL USE:
-
 Message Broker: RabbitMQ
   - Reliable message delivery with acknowledgments
   - Message persistence to disk
   - Dead letter queues for failed messages
   - Easy .NET integration via RabbitMQ.Client NuGet package
-
 Email Delivery: SendGrid or AWS SES
   - SendGrid for professional, reliable email delivery
   - AWS SES as alternative if already on AWS
 
 WHY NOT SYNCHRONOUS HTTP/REST:
-
-I would not choose synchronous HTTP/REST calls because they would block task completion 
-while waiting for email delivery, create a hard dependency between services, cause cascading 
-failures if the Notification Service goes down, and result in poor user experience with 
-long response times.
+I would not choose synchronous HTTP/REST calls because they would block task completion while waiting for email delivery, create a hard dependency between services, cause cascading failures if the Notification Service goes down, and result in poor user experience with long response times.
 
 HOW IT WORKS:
-
-When a task is completed, I will publish a TaskCompletedEvent to RabbitMQ. The Notification 
-Service subscribes to these events and sends emails independently without blocking the 
-Task Service. This ensures the system remains decoupled, scalable, and resilient.
+When a task is completed, I will publish a TaskCompletedEvent to RabbitMQ. The Notification Service subscribes to these events and sends emails independently without blocking the Task Service. This ensures the system remains decoupled, scalable, and resilient.
