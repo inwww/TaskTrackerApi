@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.OpenApi.Models;
 using TaskTrackerApi.Services;
 
-var builder = WebApplicationBuilder.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ITaskRepository, InMemoryTaskRepository>();
 
