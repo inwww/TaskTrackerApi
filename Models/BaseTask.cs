@@ -9,24 +9,15 @@ public class TaskCompletedEventArgs : EventArgs
     public DateTime CompletedAt { get; set; }
 }
 
-public abstract record BaseTask
+public abstract record BaseTask(required string Title)
 {
     public event TaskCompletedEventHandler? OnTaskCompleted;
 
-    public Guid Id { get; init; }
+    public Guid Id { get; init; } = Guid.NewGuid();
 
-    public required string Title { get; set; }
+    public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
 
-    public DateTime CreatedAt { get; init; }
-
-    public bool IsCompleted { get; protected set; }
-
-    protected BaseTask()
-    {
-        Id = Guid.NewGuid();
-        CreatedAt = DateTime.UtcNow;
-        IsCompleted = false;
-    }
+    public bool IsCompleted { get; protected set; } = false;
 
     public virtual void CompleteTask()
     {

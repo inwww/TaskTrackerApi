@@ -1,16 +1,5 @@
 namespace TaskTrackerApi.Models;
 
-public record BugReportTask : BaseTask
+public record BugReportTask(string Title, SeverityLevel SeverityLevel) : BaseTask(Title)
 {
-    public SeverityLevel SeverityLevel { get; set; }
-
-    public BugReportTask()
-    {
-    }
-
-    public BugReportTask(string title, SeverityLevel severityLevel) : this()
-    {
-        Title = title;
-        SeverityLevel = severityLevel;
-    }
 }

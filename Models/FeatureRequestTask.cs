@@ -1,16 +1,5 @@
 namespace TaskTrackerApi.Models;
 
-public record FeatureRequestTask : BaseTask
+public record FeatureRequestTask(string Title, decimal EstimatedHours) : BaseTask(Title)
 {
-    public decimal EstimatedHours { get; set; }
-
-    public FeatureRequestTask()
-    {
-    }
-
-    public FeatureRequestTask(string title, decimal estimatedHours) : this()
-    {
-        Title = title;
-        EstimatedHours = estimatedHours;
-    }
 }
