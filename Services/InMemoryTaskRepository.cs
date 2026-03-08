@@ -2,9 +2,6 @@ namespace TaskTrackerApi.Services;
 
 using TaskTrackerApi.Models;
 
-/// <summary>
-/// In-memory implementation of task repository for development and testing
-/// </summary>
 public class InMemoryTaskRepository : ITaskRepository
 {
     private readonly Dictionary<Guid, BaseTask> _tasks = new();

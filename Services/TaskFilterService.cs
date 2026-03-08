@@ -2,16 +2,8 @@ namespace TaskTrackerApi.Services;
 
 using TaskTrackerApi.Models;
 
-/// <summary>
-/// Static service for filtering and analyzing tasks
-/// </summary>
 public static class TaskFilterService
 {
-    /// <summary>
-    /// Get high severity incomplete bug reports sorted by creation date (newest first)
-    /// </summary>
-    /// <param name="tasks">Collection of all tasks</param>
-    /// <returns>Filtered and sorted list of bug reports</returns>
     public static List<BugReportTask> GetHighSeverityIncompleteBugs(IEnumerable<BaseTask> tasks)
     {
         return tasks
@@ -21,11 +13,6 @@ public static class TaskFilterService
             .ToList();
     }
 
-    /// <summary>
-    /// Calculate total estimated hours for incomplete feature requests
-    /// </summary>
-    /// <param name="tasks">Collection of all tasks</param>
-    /// <returns>Sum of estimated hours</returns>
     public static decimal GetTotalEstimatedHours(IEnumerable<BaseTask> tasks)
     {
         return tasks
@@ -34,11 +21,6 @@ public static class TaskFilterService
             .Sum(feature => feature.EstimatedHours);
     }
 
-    /// <summary>
-    /// Get comprehensive task analysis combining both high severity bugs and feature hours
-    /// </summary>
-    /// <param name="tasks">Collection of all tasks</param>
-    /// <returns>Tuple containing high severity bugs and total estimated hours</returns>
     public static (List<BugReportTask> HighSeverityBugs, decimal TotalEstimatedHours) GetTaskAnalysis(
         IEnumerable<BaseTask> tasks)
     {

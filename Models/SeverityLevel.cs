@@ -1,8 +1,5 @@
 namespace TaskTrackerApi.Models;
 
-/// <summary>
-/// Severity levels for bug reports
-/// </summary>
 public enum SeverityLevel
 {
     Low = 1,
