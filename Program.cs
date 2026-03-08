@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.OpenApi.Models;
 using TaskTrackerApi.Services;
 
 var builder = WebApplicationBuilder.CreateBuilder(args);
 
-// Add services to the container
 builder.Services.AddScoped<ITaskRepository, InMemoryTaskRepository>();
 
 builder.Services
@@ -13,16 +14,15 @@ builder.Services
         options.JsonSerializerOptions.WriteIndented = true;
     });
 
-// Add API documentation
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Task Tracker API",
         Version = "v1",
         Description = "A distributed task management microservice built with ASP.NET Core",
-        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+        Contact = new OpenApiContact
         {
             Name = "Task Tracker",
             Url = new Uri("https://github.com")
@@ -36,7 +36,6 @@ builder.Services.AddSwaggerGen(c =>
     }
 });
 
-// Add CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
@@ -48,7 +47,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Add logging
 builder.Services.AddLogging(config =>
 {
     config.ClearProviders();
@@ -61,7 +59,6 @@ builder.Services.AddLogging(config =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -80,7 +77,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Health check endpoint
 app.MapGet("/health", async context =>
 {
     context.Response.ContentType = "application/json";
