@@ -58,7 +58,6 @@ public class TasksController : ControllerBase
 
         var bugTask = new BugReportTask(request.Title, request.SeverityLevel);
 
-        // Subscribe to completion event for logging
         bugTask.OnTaskCompleted += (sender, args) =>
         {
             _logger.LogInformation(
@@ -91,7 +90,6 @@ public class TasksController : ControllerBase
 
         var featureTask = new FeatureRequestTask(request.Title, request.EstimatedHours);
 
-        // Subscribe to completion event for logging
         featureTask.OnTaskCompleted += (sender, args) =>
         {
             _logger.LogInformation(
