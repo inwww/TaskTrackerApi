@@ -9,7 +9,7 @@ public class TaskCompletedEventArgs : EventArgs
     public DateTime CompletedAt { get; set; }
 }
 
-public abstract record BaseTask(required string Title)
+public abstract record BaseTask(string Title)
 {
     public event TaskCompletedEventHandler? OnTaskCompleted;
 
