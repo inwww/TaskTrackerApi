@@ -4,7 +4,7 @@ using TaskTrackerApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<ITaskRepository, InMemoryTaskRepository>();
+builder.Services.AddSingleton<ITaskRepository, InMemoryTaskRepository>();
 
 builder.Services
     .AddControllers()
